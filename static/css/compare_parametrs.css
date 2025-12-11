@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: var(--BgColor);
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 46px;
+    height: 46px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+	cursor: pointer;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+table {
+    border-collapse: collapse;
+	font-size: 10px;
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+}
+
+td, th {
+    border: 2px solid rgb(57, 67, 58);
+	border-radius: 8px;
+    text-align: left;
+    padding: 8px;
+}
+
+th{
+    position: relative;
+    min-width: 180px;
+}
+
+tr{
+    background-color: var(--TableColor1);
+    color: var(--AccentColor);
+	height: 64px;
+}
+
+tr:nth-child(even) {
+    background-color: var(--TableColor2);
+}
+
+.CustomSelect{
+    width: 140px;
+    min-height: 10px;
+}
+
+.CustomSelect .SelectMenu{
+    width: 140px;
+}
+
+.CustomSelect .SelectInput{
+	padding: 9px 15px;
+    height:fit-content;
+	font-size: 12px;
+    min-width: 140px;
+}
+
+.CustomSelect .SelectInput .SelectName{
+	height: auto;
+}
+
+.CustomSelect .SelectInput .SelectName::-webkit-scrollbar {
+	display: none;
+}
+
+.CustomSelect .SelectMenu{
+	max-height: 200px;
+    z-index: 1000;
+}
+
+
+.CustomSelect .SelectMenu .SelectSearchInput{
+	padding: 0px 15px;
+	height: 30px;
+	margin-bottom: 10px;
+}
+
+.CustomSelect .SelectMenu .SelectItems .CustomSelectItem{
+	font-size: 11px;
+	padding: 10px 10px;
+	line-height: 1.2;
+}
+
+
+.continue_button{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 8px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.continue_button:hover{
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.CustomPromptContainer {
+    top: 60px;
+}
+
+.CustomPromptContainer .CustomPromptTail{
+    top: -11px;
+    transform: rotate(180deg) translateX(50%);
+}

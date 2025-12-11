@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <title></title>
+
+        <style>
+            :root {
+                --BgColor: #ddffe3;
+                --MainColor: #10710f;
+                --AccentColor: #59a343;
+                --TableColor1: #dbf6dd;
+                --TableColor2: #dbffe2;
+                --ColorForValue1: #59a34366;
+                --ColorForValue2: #7aba6c;
+                --ColorForValue3: #4d9b3c;
+                --ColorForValue4: #59a343e6;
+                --ColorForValue5: #59a34399;
+                --CustomPromptColor: #717f72;
+            }
+        </style>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/custom_elements.css') }}">
+        
+        <script>
+            var params_info = {{ params_info|tojson }};
+            var params_names = {{ params_names|tojson }};
+            var params = {{ params|tojson }};
+
+            var CheckboxGroup = ["CheckBox", "CheckBoxGroup"];
+            var SelectGroup = ["ComboBox"];
+            var MultiSelectGroup = ["List", "CheckBoxGroupValues"];
+            var MultiSelectSplitGroup = ["ListValues"];
+            var NumberGroup = ["Integer", "Decimal"];
+            var TextGroup = ["MultiText", "TextArea", "TextInput"];
+        </script>
+
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/select_parametrs_for_all_css.css') }}">
+        <script src="{{ url_for('static',filename='js/select_parametrs_for_all_js.js') }}"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="TopContainer">
+            <a class="BackButton" href="/rozetka/back/6/">
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ddffe3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+                >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 6l-6 6l6 6" />
+                </svg>
+            </a>
+            <p class="title">Select parametrs for all</p>
+        </div>
+        <form id="parametrs_form" method="post">
+            <table class="all_parametrs_table">
+                <tr class="titles">
+                    <th>Parametrs</th>
+                    <th>Values</th>
+                    <th></th>
+                </tr>
+            </table>
+            <button type="button" class="AddParametrButton" onclick="AddParametr()">Add</button>
+            <button type="submit" class="continue_button" onclick="return SubmitFunction(event);">Continue</button>
+        </form>
+    </body>
+
+    <script src="{{ url_for('static',filename='js/custom_elements.js') }}"></script>
+
+    <script>
+        if (params!=[]){
+            for (ParametrName in params){
+                var ParametrTr=AddParametr();
+                var CustomSelectItem = ParametrTr.querySelector(".ParametrNameGap .AddParametrNameCustomSelect");
+                var SelectItems = CustomSelectItem.querySelectorAll(".SelectMenu .SelectItems .CustomSelectItem");
+                
+                SelectItems.forEach(SelectItem => {
+                    if (SelectItem.innerText == ParametrName) {
+                        SetCustomSelectItem(SelectItem);
+                    }
+                });
+
+                let ParemetrInfo = params_info[ParametrName];
+                var ParametrValueGap=ParametrTr.querySelector(".ParametrValueGap");
+                if (CheckboxGroup.includes(ParemetrInfo["details"]["type"])){
+                    ParametrValueGap.querySelector(".SelectedValue").value=params[ParametrName];
+                    ParametrValueGap.querySelector(".CustomCheckbox").checked=params[ParametrName];
+                }
+                else if (SelectGroup.includes(ParemetrInfo["details"]["type"])){
+                    ParametrValueGap.querySelectorAll(".CustomSelectItem").forEach(SelectItem => {
+                        if (SelectItem.innerText == params[ParametrName]) {
+                            SetCustomSelectItem(SelectItem);
+                        }
+                    });
+                }
+                else if (MultiSelectGroup.concat(MultiSelectSplitGroup).includes(ParemetrInfo["details"]["type"])){
+                    ParametrValueGap.querySelectorAll(".CustomSelectItem").forEach(SelectItem => {
+                        if (params[ParametrName].includes(SelectItem.innerText)) {
+                            SetCustomSelectItem(SelectItem);
+                        }
+                    });
+                }
+                else if (NumberGroup.concat(TextGroup).includes(ParemetrInfo["details"]["type"])){
+                    ParametrValueGap.querySelector(".CustomInput").value=params[ParametrName];
+                }
+            }
+        }
+    </script>
+</html>

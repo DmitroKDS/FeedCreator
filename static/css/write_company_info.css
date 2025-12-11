@@ -1,0 +1,147 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: var(--BgColor);
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 46px;
+    height: 46px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+	cursor: pointer;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+}
+
+
+.CustomCompanyInfoInput {
+    position: relative;
+    margin-top: 10px;
+    width:330px;
+    margin-bottom: 15px;
+}
+
+.CompanyInfoInput {
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:100%;
+    border:none;
+    background-color: transparent;
+    border-bottom:1px solid var(--AccentColor);
+}
+
+.CompanyInfoInput:focus{
+    outline: none;
+}
+
+.CompanyInfoBar{
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.CompanyInfoBar:before,
+.CompanyInfoBar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: var(--MainColor);
+    transition: 0.2s ease all;
+}
+
+.CompanyInfoBar:before {
+    left: 50%;
+}
+
+.CompanyInfoBar:after {
+    right: 50%;
+}
+
+.CompanyInfoInput:focus ~ .CompanyInfoBar:before,
+.CompanyInfoInput:focus ~ .CompanyInfoBar:after {
+    width: 50%;
+}
+
+.CompanyInfoPlaceholder {
+    color: var(--AccentColor);
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all;
+}
+
+.CompanyInfoInput:focus ~ .CompanyInfoPlaceholder, 
+.CompanyInfoInput:not(:placeholder-shown) ~ .CompanyInfoPlaceholder {
+    top:-15px;
+    font-size:14px;
+    color: var(--MainColor);
+}
+
+
+
+.continue_button{
+	margin-top: 20px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 8px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.continue_button:hover{
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+
+.CustomPromptContainer {
+    top: -20px;
+}

@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+    background-color: var(--BgColor);
+    height: 100%;
+    position: relative;
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 46px;
+    height: 46px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+	cursor: pointer;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: #39433a;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.continue_button{
+	margin-top: 20px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 8px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.continue_button:hover{
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.LoaderParametrsContainer {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.LoaderParametrs {
+    border: 16px solid var(--BgColor);
+    border-top: 16px solid var(--MainColor);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: SpinAnimation 2s linear infinite;
+}
+
+.LoaderParametrsText{
+    color: var(--BgColor);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@keyframes SpinAnimation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.CustomPromptContainer {
+    top: 72px;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>feed creator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/select_marketplace.css') }}" />
+    <script src="{{ url_for('static', filename='js/select_marketplace.js') }}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+      /* small touch-ups to match the rozetka-only flow */
+      body { margin: 0; font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .history_button {
+        position: fixed; top: 16px; right: 16px; display: inline-flex; align-items: center; justify-content: center;
+        width: 48px; height: 48px; border-radius: 12px; background: #fff; color: #111827;
+        box-shadow: 0 1px 3px rgba(0,0,0,.08); text-decoration: none; border: 1px solid #e5e7eb;
+      }
+      .title { text-align: center; margin: 96px 16px 24px; font-size: 22px; font-weight: 600; }
+      .marketplace_container.single { display: flex; justify-content: center; }
+      .marketplace_button { text-decoration: none; color: inherit; }
+      .marketplace_button p { text-align: center; margin-top: 12px; font-weight: 500; }
+      /* keep your existing class names so your CSS can style the tile */
+    </style>
+  </head>
+  <body>
+    <a class="history_button" href="/history" aria-label="history">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-history">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 8l0 4l2 2" />
+        <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+      </svg>
+    </a>
+
+    <p class="title">create feed for rozetka</p>
+
+    <div class="marketplace_container single">
+      <a href="/rozetka/1/" class="marketplace_button rozetka" aria-label="start rozetka wizard">
+        <button type="button" aria-hidden="true"></button>
+        <p>Rozetka</p>
+      </a>
+    </div>
+  </body>
+</html>

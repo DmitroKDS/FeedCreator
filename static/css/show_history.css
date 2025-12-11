@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: var(--BgColor);
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+	cursor: pointer;
+}
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.InfoContainer{
+    margin-left: 10px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.InfoItem{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.InfoTitle{
+    color: rgb(57, 67, 58);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.Info{
+    background-color: white;
+	font-size: 12px;
+    border: 2px solid var(--AccentColor);
+    border-radius: 8px;
+    box-shadow: none;
+	padding: 10px 20px;
+}
+
+
+.UseHistoryButtonContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.UseHistoryButton{
+    color: var(--BgColor);
+    font-size: 18px;
+    border: none;
+    background-color: var(--MainColor);
+    opacity:0.8;
+    border-radius: 20px;
+    padding:10px 40px;
+    transition: all 0.3s ease-in;
+}
+
+.UseHistoryButton:hover{
+    opacity: 1;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Choose file</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      :root{
+        --BgColor: #ddffe3;
+        --MainColor: #10710f;
+        --AccentColor: #59a343;
+        --CustomPromptColor: #717f72;
+      }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_elements.css') }}" />
+
+    <script>
+      const error_title = {{ error_title | tojson }};
+      const error_text  = {{ error_text  | tojson }};
+      const used_file   = {{ used_file   | tojson }};
+    </script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/choose_file.css') }}" />
+    <script src="{{ url_for('static', filename='js/choose_file.js') }}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="TopContainer">
+      <a class="BackButton" href="/rozetka/back/3/">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ddffe3"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 6l-6 6l6 6" />
+        </svg>
+      </a>
+      <p class="title">Choose file</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+      <div class="CustomUploadFileInput">
+        <custom-prompt prompt="Select file" class="CustomPromptContainer"></custom-prompt>
+
+        <button type="button" class="UploadFileButton">
+          Choose File
+          <input
+            type="file"
+            name="selected_file"
+            class="UploadFileInput"
+            accept=".xml"
+            onchange="document.querySelector('.CustomUploadFileInput .UploadFileName').innerText = `${this.value.split('\\').pop().split('/').pop()} (selected)`;"
+          />
+        </button>
+        <p class="UploadFileName">no file selected</p>
+      </div>
+
+      <button type="submit" class="continue_button" onclick="return SubmitFunction(event);">Continue</button>
+    </form>
+
+    <custom-popup-prompt
+      prompt_title="File error"
+      prompt_text="Your file has an error">
+    </custom-popup-prompt>
+
+    <script src="{{ url_for('static', filename='js/custom_elements.js') }}"></script>
+    <script>
+      // Pre-fill with already uploaded file name (read-only hint)
+      if (used_file) {
+        const fake = new File([""], used_file, {
+          type: "application/octet-stream"
+        });
+        const dt = new DataTransfer();
+        dt.items.add(fake);
+        const input = document.querySelector(".UploadFileInput");
+        input.files = dt.files;
+        document.querySelector(".UploadFileName").innerText = `${used_file} (used)`;
+      }
+
+      if (error_text) {
+        const overlay = document.querySelector(".CustomPopupPromptOverlay");
+        overlay.querySelector(".CustomPopupPromptBody h2").innerText = error_title || "File error";
+        overlay.querySelector(".CustomPopupPromptBody p").innerText  = error_text;
+        OpenCustomPopupPrompt(overlay);
+      }
+    </script>
+  </body>
+</html>

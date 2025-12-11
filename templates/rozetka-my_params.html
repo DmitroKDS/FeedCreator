@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare parameters</title>
+
+    <style>
+      :root{
+        --BgColor: #ddffe3;
+        --MainColor: #10710f;
+        --AccentColor: "#59a343";
+        --TableColor1: #dbf6dd;
+        --TableColor2: #dbffe2;
+        --CustomPromptColor: #59a34399;
+      }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_elements.css') }}" />
+
+    <script>
+      let tags           = {{ tags|tojson }};
+      let error_title          = {{ error_title|tojson }};
+      let error_text           = {{ error_text|tojson }};
+      let RequiredParametrsNames = {{ required_names|tojson }};
+      let OptionalPareametrsNames = {{ optional_names|tojson }};
+      let CategoryParametrNames = {{ category_names|tojson }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/compare_parametrs.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compare_parametrs.css') }}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="TopContainer">
+      <a class="BackButton" href="/rozetka/back/5/">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ddffe3"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 6l-6 6l6 6" />
+        </svg>
+      </a>
+      <p class="title">Compare parameters</p>
+    </div>
+
+    <form id="parametrs_form" method="post">
+      <table>
+        <!-- mapping row -->
+        <tr>
+          {% for tag, selected in tags %}
+          <th>
+            <custom-prompt prompt="Select option" class="CustomPromptContainer OptionPrompt"></custom-prompt>
+            <custom-prompt prompt="This option does not exist" class="CustomPromptContainer ExistPrompt"></custom-prompt>
+
+            <custom-select selected_value_name="param" class="AddParametrCustomSelect", select_title="{{tag}}">
+              {# default #}
+              <custom-select-item class="{{ 'selected_option' if selected == "None" else 'select_option' }}">None</custom-select-item>
+
+              {# required #}
+              {% for name in required_names %}
+                <custom-select-item
+                  class="{{ 'selected_option' if name == selected else 'select_option' }}"
+                  color="#a34343">{{ name }}</custom-select-item>
+              {% endfor %}
+
+              {# optional #}
+              {% for name in optional_names %}
+                <custom-select-item
+                  class="{{ 'selected_option' if name == selected else 'select_option' }}"
+                  color="#9ba343">{{ name }}</custom-select-item>
+              {% endfor %}
+
+              {# category #}
+              {% for name in category_names %}
+                <custom-select-item
+                  class="{{ 'selected_option' if name == selected else 'select_option' }}">{{ name }}</custom-select-item>
+              {% endfor %}
+            </custom-select>
+          </th>
+          {% endfor %}
+        </tr>
+
+        {# preview rows: show is a 2D list with at least 3 rows #}
+        {% for r in tiny_data %}
+          <tr>
+            {% for cell in r %}
+              <th>{{ cell }}</th>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+
+      <button type="submit" class="continue_button" onclick="return SubmitFunction(event);">Continue</button>
+    </form>
+
+    <custom-popup-prompt prompt_title="Parameter error" prompt_text=""></custom-popup-prompt>
+
+    <script src="{{ url_for('static', filename='js/custom_elements.js') }}"></script>
+    <script>
+      // activate all preselected items
+      document.querySelectorAll(".selected_option").forEach(el => el.click());
+
+      // show validation error
+      if (error_title){
+        const overlay = document.querySelector(".CustomPopupPromptOverlay");
+        if (overlay){
+          overlay.querySelector(".CustomPopupPromptBody h2").innerText = error_title;
+          overlay.querySelector(".CustomPopupPromptBody p").innerText  = error_text || "";
+          OpenCustomPopupPrompt(overlay);
+        }
+      }
+    </script>
+  </body>
+</html>

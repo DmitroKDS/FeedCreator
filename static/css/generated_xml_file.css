@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    margin-top: 50px;
+    background-color: var(--BgColor);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MainContainer {
+    width: 400px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.Title{
+    color: rgb(57, 67, 58);
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.ButtonContainer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.DownloadButton, .ToMainButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50px;
+    color: var(--BgColor);
+    background: var(--MainColor);
+	font-size: 16px;
+    height: 55px;
+    width: 180px;
+    cursor: pointer;
+}
+
+.ToMainButton a{
+    width: 160px;
+    height: 55px;
+    text-decoration: none;
+    color: var(--BgColor);
+	font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.DownloadButton svg, .ToMainButton svg {
+    margin-right: 8px;
+}
+
+.DownloadButton:hover, .ToMainButton:hover {
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}

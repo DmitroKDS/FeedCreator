@@ -1,0 +1,341 @@
+.CustomSelect{
+    width: 250px;
+	position: relative;
+}
+
+.CustomSelect .SelectInput{
+	display: flex;
+	height: 45px;
+	background-color: #fff;
+	box-shadow: 0 0 5px rgba(0,0,0,0.1);
+	padding: 20px;
+	font-size: 14px;
+	border-radius: 8px;
+	align-items: center;
+	cursor: pointer;
+	justify-content: space-between;
+}
+
+.CustomSelect .SelectInput .SelectName{
+	display: block;
+    width: 100%;
+}
+
+.CustomSelect .SelectInput .SelectedValue{
+    display: none;
+}
+
+.CustomSelect .SelectInput .CustomOpenSelectIcon{
+	font-size: 19px;
+	transition: 0.25s ease-out;
+}
+
+.CustomSelect .SelectMenu{
+    width: 250px;
+    position: absolute;
+	padding: 15px 20px;
+	border-radius: 8px;
+	background-color: #fff;
+	margin-top: 4px;
+	box-shadow: 0 0 5px rgba(0,0,0,0.1);
+	max-height: 300px;
+  	overflow-y: scroll;
+	display: none;
+}
+
+.CustomSelect .SelectMenu .SelectSearchInput{
+	width: 100%;
+	padding: 0px 20px;
+	height: 40px;
+	margin-bottom: 15px;
+	border-radius: 8px;
+	border: 2px solid rgb(70, 70, 70);
+}
+
+.CustomSelect .SelectMenu .SelectSearchInput::placeholder{
+	color: rgb(70, 70, 70);
+}
+
+.CustomSelect .SelectMenu .SelectSearchInput:focus{
+	outline: none;
+	box-shadow: 0 0 0 2px rgb(194, 227, 252);
+}
+
+
+.CustomSelect .SelectMenu .SelectItems .CustomSelectItem{
+	display: flex;
+	cursor: pointer;
+	border-radius: 8px;
+	padding: 10px 16px;
+	align-items: center;
+	background-color: #fff;
+}
+
+.CustomSelect .SelectMenu .SelectItems .CustomSelectItem:hover {
+	background-color: #f2f2f2;
+}
+
+
+.CustomSelect.active .SelectInput .CustomOpenSelectIcon{
+    transform: rotate(-180deg);
+}
+
+.CustomSelect.active .SelectMenu {
+    display: block;
+}
+
+.CustomSelect .SelectInput .SelectedValues{
+    margin-left: -2px;
+    margin-top:1px;
+	overflow: auto;
+    max-height: 65px;
+    max-width: 300px;
+    display: inline-block;
+    scrollbar-width: thin;
+}
+
+.CustomSelect .SelectInput .SelectedValues .SelectedValueItem{
+    padding: 1px 0px;
+    background-color: var(--ColorForValue1);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    margin-top:2px;
+    margin-left: 2px;
+}
+
+.CustomSelect .SelectInput .SelectedValues .SelectedValueItem .SelectedValueItemText{
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 6px;
+}
+
+.CustomSelect .SelectInput .SelectedValues .SelectedValueItem .SelectedValueItemDelete{
+    width: 15px;
+    height: 15px;
+    background-color: var(--ColorForValue2);
+    border: 3px solid var(--ColorForValue2);
+    border-radius: 8px;
+    margin-right: 6px;
+    transition: 0.05s ease-in-out;
+}
+
+.CustomSelect .SelectInput .SelectedValues .SelectedValueItem .SelectedValueItemDelete:active{
+    background-color: var(--ColorForValue3);
+    border: 3px solid var(--ColorForValue3);
+}
+
+
+
+.CustomCheckboxInput{
+    cursor: pointer;
+}
+
+.CustomCheckboxInput .CustomCheckbox{
+    display: none;
+}
+
+.CustomCheckboxInput .CustomCheckbox:checked + .CustomCheckboxMark {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='{{Colors[8]}}' d='M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z'/%3E%3C/svg%3E") no-repeat 3px 4px/15px 15px;
+    background-color: #fff;
+}
+
+.CustomCheckboxInput .CustomCheckboxMark{
+    margin-left: 10px;
+    margin-top: 10px;
+	width: 26px;
+	height: 26px;
+    border: 2px solid var(--ColorForValue4);
+    border-radius: 8px;
+    background-color: #fff;
+    display: inline-block;
+}
+
+
+
+.CustomNumberInput{
+    width: auto;
+}
+
+.CustomNumberInput .CustomInput{
+	height: 26px;
+    width: 150px;
+	background-color: #fff;
+	padding: 15px;
+	font-size: 12px;
+    border: 2px solid var(--ColorForValue1);
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    transition: 0.05s linear;
+}
+
+.CustomNumberInput .CustomInput::-webkit-inner-spin-button,
+.CustomNumberInput .CustomInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.CustomNumberInput .CustomInput:focus{
+	outline: none;
+    border: 2px solid var(--MainColor);
+}
+
+.CustomNumberInput .CustomMinusButton, .CustomNumberInput .CustomPlusButton{
+    width: 34px;
+    height: 34px;
+    background-color: #fff;
+    font-size: 16px;
+    border: 2px solid var(--ColorForValue1);
+    color: var(--ColorForValue5);
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: -6px;
+    position: relative;
+    transition: 0.2s linear;
+}
+
+.CustomNumberInput .CustomPlusButton{
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.CustomNumberInput .CustomMinusButton:active,
+.CustomNumberInput .CustomPlusButton:active{
+    border: 2px solid var(--MainColor);
+}
+
+
+
+.CustomTextInput{
+    width: auto;
+}
+
+.CustomTextInput .CustomInput{
+	height: 26px;
+    width: 220px;
+	background-color: #fff;
+	padding: 15px;
+	font-size: 12px;
+    border: 2px solid var(--ColorForValue1);
+	border-radius: 8px;
+	cursor: pointer;
+    transition: 0.05s linear;
+}
+
+.CustomTextInput .CustomInput:focus{
+	outline: none;
+    border: 2px solid var(--MainColor);
+}
+
+
+.CustomPromptContainer {
+    position:absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    height: 37px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.CustomPromptContainerActivate{
+    opacity: 1;
+    visibility: visible;
+}
+
+.CustomPromptContainer .CustomPromptShape {
+    background-color: var(--CustomPromptColor);
+    padding: 3px 13px;
+    width: auto;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    outline: 1px solid var(--CustomPromptColor);
+    white-space: nowrap;
+}
+
+.CustomPromptContainer .CustomPromptTail {
+    color: var(--CustomPromptColor);
+    width: 15px;
+    height: 15px;
+    position:absolute;
+    top: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+
+.CustomPopupPromptOverlay {
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    padding-top: 20vh;
+}
+
+.CustomPopupPromptOverlayActivate{
+    display: flex;
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptContent {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 20%;
+    padding: 30px;
+    max-width: 500px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #39433a;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptCloseButton {
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    transition: color 0.3s;
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptCloseButton svg{
+    stroke: #39433a;
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptCloseButton:hover svg{
+    stroke: var(--MainColor);
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptBody {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptBody h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #39433a;
+}
+
+.CustomPopupPromptOverlay .CustomPopupPromptBody p {
+    font-size: 16px;
+    line-height: 1.4;
+}

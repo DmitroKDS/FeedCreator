@@ -1,0 +1,247 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: var(--BgColor);
+    padding-bottom:60px;
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+	cursor: pointer;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+	font-size: 18px;
+}
+
+td, th {
+    border: 2px solid rgb(57, 67, 58);
+	border-radius: 8px;
+    text-align: left;
+    padding: 8px;
+}
+
+th{
+    position: relative;
+}
+
+tr{
+    background-color: var(--TableColor1);
+    color: var(--AccentColor);
+	height: 64px;
+}
+
+tr:nth-child(even) {
+    background-color: var(--TableColor2);
+}
+
+.titles{
+    font-size: 18px;
+}
+
+
+
+.ParametrValueContainer{
+	display: flex;
+	justify-content: flex-start;
+    align-items: center;
+	gap: 10px;
+}
+
+
+.CustomSelect .SelectInput{
+	height: 40px;
+	padding: 15px;
+	font-size: 14px;
+}
+
+.CustomSelect .SelectInput .SelectName{
+	max-height: 28px;
+	overflow: auto;
+}
+
+.CustomSelect .SelectMenu{
+	padding: 15px 20px;
+	max-height: 200px;
+	z-index: 100;
+}
+
+
+.CustomSelect .SelectMenu .SelectSearchInput{
+	padding: 0px 15px;
+	margin-bottom: 10px;
+}
+
+.CustomSelect .SelectMenu .SelectItems .CustomSelectItem{
+	font-size: 11px;
+	padding: 20px 10px;
+	line-height: 1.2;
+}
+
+
+
+.AddParametrValueCustomSelect{
+    width: 220px;
+}
+
+.AddParametrValueCustomSelect .SelectInput{
+	height: 26px;
+	font-size: 12px;
+    border: 2px solid var(--ColorForValue1);
+    box-shadow: none;
+	padding: 15px;
+}
+
+.AddParametrValueCustomSelect .SelectInput .SelectName{
+	max-height: 28px;
+	overflow: auto;
+}
+
+
+.AddParametrValueCustomSelect .SelectMenu{
+    width: 220px;
+	margin-top: 4px;
+    box-shadow: none;
+	max-height: 200px;
+	z-index: 100;
+}
+
+
+.AddParametrValueCustomSelect .SelectMenu .SelectSearchInput{
+	padding: 0px 15px;
+	margin-bottom: 10px;
+}
+
+.AddParametrValueCustomSelect .SelectMenu .SelectItems .CustomSelectItem{
+	font-size: 11px;
+	padding: 20px 10px;
+	line-height: 1.2;
+}
+
+
+
+.AddMultiplyParametrValueCustomSelect{
+    width: 220px;
+}
+
+.AddMultiplyParametrValueCustomSelect .SelectInput{
+	height: auto;
+    max-height: 70px;
+	font-size: 12px;
+    border: 2px solid var(--ColorForValue1);
+    box-shadow: none;
+	padding: 7px 15px;
+}
+
+
+.AddMultiplyParametrValueCustomSelect .SelectMenu{
+    width: 220px;
+	margin-top: 4px;
+    box-shadow: none;
+	max-height: 200px;
+	z-index: 100;
+}
+
+
+.AddMultiplyParametrValueCustomSelect .SelectMenu .SelectSearchInput{
+	padding: 0px 15px;
+	margin-bottom: 10px;
+}
+
+.AddMultiplyParametrValueCustomSelect .SelectMenu .SelectItems .CustomSelectItem{
+	font-size: 11px;
+	padding: 20px 10px;
+	line-height: 1.2;
+}
+
+
+
+
+
+.ParametrCopyButton, .ParametrDeleteButton{
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 4px 10px;
+	border: none;
+	border-radius: 4px;
+	font-size: 8px;
+	cursor: pointer;
+    align-self: flex-end;
+}
+
+
+.add_parametr_button{
+	margin-top: 10px;
+	margin-right: 50px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 6px 24px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+    align-self: flex-end;
+}
+
+.add_parametr_button:hover{
+	box-shadow: 0 10px 40px -10px var(--MainColor);
+}
+
+.continue_button{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 8px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.continue_button:hover{
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.CustomPromptContainer {
+    top: -28px;
+}

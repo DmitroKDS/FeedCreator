@@ -1,0 +1,203 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: #fff;
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: rgb(57, 67, 58);
+	border: none;
+	cursor: pointer;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px rgb(57, 67, 58);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+	font-size: 18px;
+}
+
+.Titles{
+    font-size: 18px;
+}
+
+.Titles th{
+    background-color: #fff;
+    color: rgb(57, 67, 58);
+}
+
+td, th {
+    border: 2px solid rgb(57, 67, 58);
+	border-radius: 8px;
+    text-align: left;
+    padding: 8px;
+}
+
+
+
+.rozetka{
+    background-color: #dbf6dd;
+    color: #59a343;
+	height: 64px;
+}
+
+.rozetka:nth-child(even) {
+    background-color: #dbffe2;
+}
+
+
+.epicentr{
+    background-color: #dbddf6;
+    color: #4843a3;
+	height: 64px;
+}
+
+.epicentr:nth-child(even) {
+    background-color: #dbdfff;
+}
+
+
+
+.ShowHistoryButtonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ShowHistoryButton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+
+.rozetka .ShowHistoryButton{
+    color: rgba(16, 113, 15, 0.8);
+    transition: all 0.3s ease-in;
+}
+
+.rozetka .ShowHistoryButton:hover{
+    color: rgb(16, 113, 15);
+}
+
+.epicentr .ShowHistoryButton{
+    color: rgba(35, 15, 113, 0.8);
+    transition: all 0.3s ease-in;
+}
+
+.epicentr .ShowHistoryButton:hover{
+    color: rgb(35, 15, 113);
+}
+
+
+
+.DeleteHistoryButtonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.DeleteHistoryButton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+
+.rozetka .DeleteHistoryButton {
+    color: rgba(16, 113, 15, 0.8);
+    transition: all 0.3s ease-in;
+}
+
+.rozetka .DeleteHistoryButton:hover {
+    color: rgb(16, 113, 15);
+}
+
+.epicentr .DeleteHistoryButton {
+    color: rgba(35, 15, 113, 0.8);
+    transition: all 0.3s ease-in;
+}
+
+.epicentr .DeleteHistoryButton:hover {
+    color: rgb(35, 15, 113);
+}
+
+
+.UseHistoryButtonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.rozetka .UseHistoryButton{
+    color: #dbf6dd;
+    font-size: 14px;
+    border: none;
+    background-color: rgba(16, 113, 15, 0.8);
+    border-radius: 10px;
+    padding:5px 25px;
+    transition: all 0.3s ease-in;
+}
+
+.rozetka .UseHistoryButton:nth-child(even) {
+    color: #dbffe2;
+}
+
+.rozetka .UseHistoryButton:hover{
+    background-color: rgb(16, 113, 15);
+}
+
+
+
+
+
+.epicentr .UseHistoryButton{
+    color: #dbddf6;
+    font-size: 14px;
+    border: none;
+    background-color: rgba(35, 15, 113, 0.8);
+    border-radius: 10px;
+    padding:5px 25px;
+    transition: all 0.3s ease-in;
+}
+
+.epicentr .UseHistoryButton:nth-child(even) {
+    color: #dbdfff;
+}
+
+.epicentr .UseHistoryButton:hover{
+    background-color: rgb(35, 15, 113);
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>xml generation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root{
+      --BgColor: #ddffe3;
+      --MainColor: #10710f;
+      --AccentColor: #59a343;
+    }
+  </style>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/xml_file_generation_screen.css') }}" />
+  <script src="{{ url_for('static', filename='js/xml_file_generation_screen.js') }}"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="InfinityLoaderContainer">
+    <svg class="InfinityLoader" viewBox="0 0 187.3 93.7" width="195px" height="130px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="Gradient">
+          <stop offset="0%" stop-color="#a3ff8c" />
+          <stop offset="14%" stop-color="#ffb900" />
+          <stop offset="28%" stop-color="#f78200" />
+          <stop offset="42%" stop-color="#e23838" />
+          <stop offset="56%" stop-color="#e23838" />
+          <stop offset="70%" stop-color="#973999" />
+          <stop offset="84%" stop-color="#009cdf" />
+          <stop offset="100%" stop-color="#a3ff8c" />
+        </linearGradient>
+      </defs>
+
+      <path d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"/>
+      <path d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"/>
+    </svg>
+
+    <div class="GenerationText">XML generation</div>
+  </div>
+
+  <script>
+    setTimeout(function () {
+      window.location.href = "/rozetka/generated_xml_file";
+    }, 1000);
+  </script>
+</body>
+</html>

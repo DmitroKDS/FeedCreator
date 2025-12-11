@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Select company info</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      :root{
+        --BgColor: #ddffe3;
+        --MainColor: #10710f;
+        --AccentColor: #59a343;
+        --CustomPromptColor: #717f72;
+      }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_elements.css') }}" />
+
+    <script>
+      const url_error         = {{ error | tojson }};
+      const initial_name      = {{ name | tojson }};
+      const initial_url       = {{ url | tojson }};
+      const initial_market_nm = {{ marketplace_name | tojson }};
+    </script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/write_company_info.css') }}" />
+    <script src="{{ url_for('static', filename='js/write_company_info.js') }}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="TopContainer">
+      <a href="/rozetka/back/2/" class="BackButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+             viewBox="0 0 24 24" fill="none" stroke="#ddffe3"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M15 6l-6 6l6 6"/>
+        </svg>
+      </a>
+      <p class="title">Write company info</p>
+    </div>
+
+    <form method="post">
+      <div class="CustomCompanyInfoInput">
+        <custom-prompt prompt="Fill out this field" class="CustomPromptContainer PromptFill"></custom-prompt>
+        <custom-prompt prompt="Max length - 255 symbols" class="CustomPromptContainer PromptLength"></custom-prompt>
+        <input
+          type="text"
+          name="name"
+          class="CompanyInfoInput"
+          value="{{ name }}"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <span class="CompanyInfoBar"></span>
+        <label class="CompanyInfoPlaceholder">Write company name</label>
+      </div>
+
+      <div class="CustomCompanyInfoInput">
+        <custom-prompt prompt="Fill out this field" class="CustomPromptContainer PromptFill"></custom-prompt>
+        <custom-prompt prompt="Max length - 255 symbols" class="CustomPromptContainer PromptLength"></custom-prompt>
+        <custom-prompt prompt="Url is incorrect" class="CustomPromptContainer PromptUrl"></custom-prompt>
+        <input
+          type="text"
+          name="url"
+          class="CompanyInfoInput CompanyInfoInputUrl"
+          value="{{ url }}"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <span class="CompanyInfoBar"></span>
+        <label class="CompanyInfoPlaceholder">Write company url</label>
+      </div>
+
+      <div class="CustomCompanyInfoInput">
+        <custom-prompt prompt="Fill out this field" class="CustomPromptContainer PromptFill"></custom-prompt>
+        <custom-prompt prompt="Max length - 255 symbols" class="CustomPromptContainer PromptLength"></custom-prompt>
+        <input
+          type="text"
+          name="marketplace_name"
+          class="CompanyInfoInput"
+          value="{{ marketplace_name }}"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <span class="CompanyInfoBar"></span>
+        <label class="CompanyInfoPlaceholder">Write marketplace company name</label>
+      </div>
+
+      <button type="submit" class="continue_button" onclick="return SubmitFunction(event);">Continue</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/custom_elements.js') }}"></script>
+    <script>
+      // Show URL error prompt if backend flagged it
+      if (url_error === true || url_error === "true") {
+        OpenCustomPrompt(document.querySelector(".PromptUrl"));
+      } else {
+        // If any data prefilled, validate presence and length to hint user
+        const blocks = Array.from(document.querySelectorAll(".CustomCompanyInfoInput"));
+        let shown = false;
+
+        blocks.forEach(block => {
+          if (shown) return;
+          const input = block.querySelector(".CompanyInfoInput");
+          const v = (input?.value || "").trim();
+          if (!v) {
+            OpenCustomPrompt(block.querySelector(".PromptFill"));
+            shown = true;
+          } else if (v.length > 255) {
+            OpenCustomPrompt(block.querySelector(".PromptLength"));
+            shown = true;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

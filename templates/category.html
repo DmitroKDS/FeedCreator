@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Select category</title>
+
+    <style>
+      :root {
+        --BgColor: #ddffe3;
+        --MainColor: #10710f;
+        --AccentColor: #59a343;
+        --CustomPromptColor: #717f72;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/custom_elements.css') }}"
+    />
+
+    <script>
+      // keep old global name so select_category.js continues to work
+      var CategoryList = {{ categories | tojson }};
+    </script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/select_category.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/select_category.js') }}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="TopContainer">
+      <a class="BackButton" href="/">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ddffe3"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 6l-6 6l6 6" />
+        </svg>
+      </a>
+      <p class="title">Select category</p>
+    </div>
+
+    <form id="category_form" method="post">
+      <custom-prompt prompt="Select category" class="CustomPromptContainer"></custom-prompt>
+
+      <custom-select select_title="Select category" selected_value_name="category">
+        {% for id, name in categories.items() %}
+          {% if id == category %}
+            <custom-select-item class="selected_option">{{ name }} (c{{id}})</custom-select-item>
+          {% else %}
+            <custom-select-item class="select_option">{{ name }} (c{{id}})</custom-select-item>
+      
+            {% endif %}
+        {% endfor %}
+      </custom-select>
+
+      <button type="submit" class="continue_button">
+        Continue
+      </button>
+    </form>
+
+    <div class="LoaderParametrsContainer">
+      <div class="LoaderParametrs"></div>
+      <div class="LoaderParametrsText">Parameters from the category are loaded</div>
+    </div>
+
+    <custom-popup-prompt
+      prompt_title="Category error"
+      prompt_text="I did not find this category in the catalog."
+    ></custom-popup-prompt>
+
+    <script src="{{ url_for('static', filename='js/custom_elements.js') }}"></script>
+    <script>
+      // preselect chosen item
+      document.querySelectorAll(".selected_option").forEach((el) => {
+        SetCustomSelectItem(el);
+      });
+    </script>
+  </body>
+</html>

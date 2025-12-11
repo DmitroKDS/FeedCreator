@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    background-color: var(--BgColor);
+}
+
+.TopContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-top: 40px;
+	gap: 30px;
+}
+
+.BackButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 46px;
+    height: 46px;
+	cursor: pointer;
+}
+
+.BackButton svg{
+	width: 46px;
+    height: 46px;
+    border-radius: 100px;
+	background-color: var(--MainColor);
+	border: none;
+}
+
+
+.BackButton:hover{
+    border-radius: 100px;
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+.title{
+    color: rgb(57, 67, 58);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+
+.CustomUploadFileInput {
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.UploadFileButton {
+    background-color: var(--AccentColor);
+    border: none;
+    border-radius: 8px;
+    color: var(--BgColor);
+    padding: 8px 32px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.UploadFileInput {
+    width: 156px;
+    height: 41px;
+    border: none;
+    border-radius: 8px;
+    opacity: 0;
+    position:absolute;
+    left:0;
+    top:0;
+    cursor:pointer;
+}
+
+.UploadFileName {
+    font-size:14px;
+    margin-top:5px;
+}
+
+
+.continue_button{
+	margin-top: 30px;
+	color: var(--BgColor);
+	background-color: var(--MainColor);
+	padding: 8px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.continue_button:hover{
+	box-shadow: 0 20px 80px -10px var(--MainColor);
+}
+
+
+.CustomPromptContainer {
+    top: -40px;
+}

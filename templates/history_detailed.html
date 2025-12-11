@@ -1,0 +1,110 @@
+<!-- templates/history_detailed.html -->
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>history detailed</title>
+  <style>
+    :root{
+      --bg:#f7f9fc;--card:#ffffff;--text:#0f172a;--muted:#475569;--border:#e5e7eb;
+      --accent:#10710f;--badge:#ddffe3;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
+    .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--accent)}
+    .back svg{stroke:var(--accent)}
+    h1{margin:0;font-size:20px}
+    .meta{margin:8px 0 20px;color:var(--muted)}
+    .meta strong{color:var(--text)}
+    .badge{background:var(--badge);border:1px solid #b5efc2;border-radius:999px;padding:2px 8px;font-weight:600}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:180px 1fr;gap:8px 12px}
+    .k{color:#64748b}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;font-size:14px;vertical-align:top}
+    thead th{background:#fafafa;color:#64748b;font-weight:600}
+    .actions{margin-top:12px;display:flex;gap:12px}
+    .btn{display:inline-block;text-decoration:none;border:1px solid var(--border);background:#fff;color:var(--text);
+         padding:8px 12px;border-radius:10px;font-weight:600}
+    .btn:hover{background:#f9fafb}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn.primary:hover{filter:brightness(.95)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="back" href="/history" aria-label="back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        back
+      </a>
+      <h1>history detailed</h1>
+    </div>
+
+    <div class="meta">
+      • category: <strong>{{ category }}</strong>
+      • file: <strong>{{ file_name }}</strong>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        {% for k, v in company_info %}
+          <div class="k">{{ k }}</div>
+          <div>
+            {% set lk = k|lower %}
+            {% if 'url' in lk %}
+              <a href="{{ v }}" target="_blank" rel="noopener">{{ v }}</a>
+            {% else %}
+              {{ v }}
+        
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>for_all_parametrs</h3>
+      <table>
+        <thead><tr><th>parametr</th><th>value</th></tr></thead>
+        <tbody>
+          {% for p, v in for_all_parametrs %}
+            <tr><td>{{ p }}</td><td>{{ v }}</td></tr>
+          {% else %}
+            <tr><td colspan="2">empty</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>if_parametrs</h3>
+      <table>
+        <thead><tr><th>statement_param</th><th>op</th><th>value</th><th>parametr</th><th>set_to</th></tr></thead>
+        <tbody>
+          {% for sp, st, sv, pn, v in if_parametrs %}
+            <tr>
+              <td>{{ sp }}</td>
+              <td>{{ st }}</td>
+              <td>{{ sv }}</td>
+              <td>{{ pn }}</td>
+              <td>{{ v }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5">empty</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="/history">← back to history</a>
+      <a class="btn primary" href="/use_history/{{ history_id }}">use this</a>
+    </div>
+  </div>
+</body>
+</html>

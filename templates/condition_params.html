@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>IF parameters</title>
+
+    <style>
+        :root {
+            --BgColor: #ddffe3;
+            --MainColor: #10710f;
+            --AccentColor: #59a343;
+            --TableColor1: #dbf6dd;
+            --TableColor2: #dbffe2;
+            --ColorForValue1: #59a34366;
+            --ColorForValue2: #7aba6c;
+            --ColorForValue3: #4d9b3c;
+            --ColorForValue4: #59a343e6;
+            --ColorForValue5: #59a34399;
+            --CustomPromptColor: #717f72;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_elements.css') }}" />
+
+    <script>
+      // Legacy globals kept so existing JS keeps working:
+      var statement_param_names  = {{ statement_param_names | tojson }};
+      var statement_param_vals = {{ statement_param_vals  | tojson }};
+        
+      var params_info = {{ params_info|tojson }};
+      var params_names = {{ params_names|tojson }};
+      var condition_params = {{ condition_params|tojson }};
+
+      var CheckboxGroup        = ["CheckBox", "CheckBoxGroup"];
+      var SelectGroup          = ["ComboBox"];
+      var MultiSelectGroup     = ["List", "CheckBoxGroupValues"];
+      var MultiSelectSplitGroup= ["ListValues"];
+      var NumberGroup          = ["Integer", "Decimal"];
+      var TextGroup            = ["MultiText", "TextArea", "TextInput"];
+    </script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/select_parametrs_if.css') }}" />
+    <script src="{{ url_for('static', filename='js/select_parametrs_if.js') }}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="TopContainer">
+      <a class="BackButton" href="/rozetka/back/7/">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ddffe3"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 6l-6 6l6 6" />
+        </svg>
+      </a>
+      <p class="title">Select parameters • IF</p>
+    </div>
+
+    <form id="parametrs_form" method="post">
+      <table class="if_parametrs_table">
+        <tr class="titles">
+          <th></th>
+          <th>Statement parameter</th>
+          <th>Statement</th>
+          <th>Statement value</th>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
+      <button type="button" class="add_parametr_button" onclick="AddParametr()">Add</button>
+      <button type="submit" class="continue_button" onclick="return SubmitFunction(event);">Continue</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/custom_elements.js') }}"></script>
+    <script>
+      // Rehydrate previously added IF rules
+      for (let i in condition_params) {
+        const row = AddParametr();
+
+        // 1) Statement parameter
+        row.querySelectorAll(".StatementParametrNameGap .SelectMenu .SelectItems .CustomSelectItem")
+          .forEach(item => { if (item.innerText === condition_params[i][0]) SetCustomSelectItem(item); });
+
+        // 2) Statement (=, contains, >, <, replace, etc.)
+        row.querySelectorAll(".StatementNameGap .SelectMenu .SelectItems .CustomSelectItem")
+          .forEach(item => { if (item.innerText === condition_params[i][1]) SetCustomSelectItem(item); });
+
+        // 3) Statement value: select for "="; input for other ops
+        if (condition_params[i][1] === "=") {
+          row.querySelectorAll(".StatementValueGap .SelectMenu .SelectItems .CustomSelectItem")
+            .forEach(item => { if (item.innerText === condition_params[i][2]) SetCustomSelectItem(item); });
+        } else {
+          const inp = row.querySelector(".StatementValueGap .CustomInput");
+          if (inp) inp.value = condition_params[i][2];
+        }
+
+        // 4) Target parameter name
+        row.querySelectorAll(".ParametrNameGap .SelectMenu .SelectItems .CustomSelectItem")
+          .forEach(item => { if (item.innerText === condition_params[i][3]) SetCustomSelectItem(item); });
+
+        // 5) Target parameter value UI based on type
+        const pName = condition_params[i][3];
+        const pInfo = params_info[pName];
+        const valContainer = row.querySelector(".ParametrValueGap");
+
+        if (!pInfo || !valContainer) continue;
+
+        if (CheckboxGroup.includes(pInfo["details"]["type"])) {
+          valContainer.querySelector(".SelectedValue").value = condition_params[i][4];
+          valContainer.querySelector(".CustomCheckbox").checked = !!condition_params[i][4];
+        } else if (SelectGroup.includes(pInfo["details"]["type"])) {
+          valContainer.querySelectorAll(".CustomSelectItem").forEach(it => {
+            if (it.innerText === condition_params[i][4]) SetCustomSelectItem(it);
+          });
+        } else if (MultiSelectGroup.concat(MultiSelectSplitGroup).includes(pInfo["details"]["type"])) {
+          valContainer.querySelectorAll(".CustomSelectItem").forEach(it => {
+            if ((condition_params[i][4] || "").includes(it.innerText)) SetCustomSelectItem(it);
+          });
+        } else if (NumberGroup.concat(TextGroup).includes(pInfo["details"]["type"])) {
+          const input = valContainer.querySelector(".CustomInput");
+          if (input) input.value = condition_params[i][4];
+        }
+      }
+    </script>
+  </body>
+</html>

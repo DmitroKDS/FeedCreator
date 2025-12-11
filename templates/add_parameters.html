@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{--bg:#ddffe3;--card:#fff;--text:rgb(57,67,58);--muted:#64748b;--border:#e5e7eb;--accent:#2563eb;--bad:#dc2626}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.container{max-width:1100px;margin:28px auto;padding:0 14px}
+.h{display:flex;align-items:center;justify-content:space-between;margin:8px 0 16px}
+.h .title{font-size:22px;font-weight:600}
+.btn{appearance:none;border:1px solid var(--border);background:#fff;padding:8px 12px;border-radius:10px;font-weight:500;cursor:pointer}
+.btn.ghost{background:#fff}
+.btn.small{padding:6px 10px;border-radius:8px}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.row{display:flex;gap:10px;align-items:center}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+.help{color:var(--muted);font-size:12px}
+.input, select, textarea{border:1px solid var(--border);border-radius:10px;padding:8px 10px;font:inherit}
+.param-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.param-card{border:1px dashed var(--border);border-radius:12px;padding:12px}
+.param-head{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.param-steps{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.step{display:grid;grid-template-columns:170px 1fr auto;gap:8px;align-items:center}
+.kv{display:flex;gap:6px;align-items:center}
+pre{margin-top:12px;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:12px;white-space:pre-wrap}
+hr{border:none;border-top:1px solid var(--border);margin:10px 0}
+.optgroup{font-weight:600;color:#111}
+
+/* Header */
+.TopContainer{display:flex;justify-content:center;align-items:center;margin-top:40px;gap:30px}
+.BackButton{display:flex;justify-content:center;align-items:center;width:46px;height:46px}
+.BackButton svg{width:46px;height:46px;border-radius:100px;background-color:#10710f;border:none;cursor:pointer}
+.BackButton:hover{border-radius:100px;box-shadow:0 20px 80px -10px #10710f}
+.title{color:rgb(57,67,58);font-size:48px;font-weight:700;text-align:center}
+.continue_button{margin-top:30px;color:#ddffe3;background-color:#10710f;padding:8px 32px;border:none;border-radius:8px;font-size:16px;cursor:pointer}
+.continue_button:hover{box-shadow:0 20px 80px -10px #10710f}
+
+/* Groups */
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+.group-head{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.group-controls{display:flex;gap:8px;align-items:center}
+.group-name-box{display:flex;flex-direction:column;gap:6px;min-width:240px}
+.group-label{font-weight:600}
+</style>
+
+<script>
+  // Flask injects these:
+  const AVAILABLE_PARAMS = {{ available_params|tojson }};
+  const PRELOAD_DATA = {{ preload_data|tojson|default("null", true) }};
+</script>
+</head>
+<body>
+<div class="container">
+  <div class="TopContainer">
+    <a class="BackButton" href="/rozetka/back/4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ddffe3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6"/></svg>
+    </a>
+    <p class="title">Add parameter groups</p>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="h">
+      <div class="title" style="font-size:18px">Групи параметрів</div>
+      <div class="group-controls">
+        <button class="btn" id="add-group">+ Додати групу</button>
+      </div>
+    </div>
+    <div class="help">Кожна група має свій набір параметрів. Назва нумерується автоматично: <i>group 1, group 2, …</i></div>
+    <div id="group-list" style="display:flex;flex-direction:column;gap:14px;margin-top:12px;"></div>
+  </div>
+
+  <form method="post" id="save-form" class="row" style="gap:8px;margin-top:20px;display:flex;justify-content:center;">
+    <input type="hidden" name="steps_json" id="steps_json">
+    <button type="submit" class="btn primary continue_button" id="save-btn">Зберегти</button>
+  </form>
+</div>
+
+<!-- TEMPLATES -->
+<template id="tmpl-group">
+  <div class="group-card">
+    <div class="group-head">
+      <div class="group-name-box" style="flex:1">
+        <span class="help">Назва групи</span>
+        <div class="group-label">group 1</div>
+      </div>
+      <div class="group-controls">
+        <button class="btn small ghost add-empty">+ параметр</button>
+        <button class="btn small ghost dup-group" title="Дублювати групу">⧉</button>
+        <button class="btn small bad del-group" title="Видалити групу">×</button>
+      </div>
+    </div>
+    <div class="param-list"></div>
+  </div>
+</template>
+
+<template id="tmpl-param">
+  <div class="param-card">
+    <div class="param-head">
+      <div class="row" style="flex:1">
+        <span class="help">Параметр</span>
+        <input class="input param-name" placeholder="назва" style="flex:1">
+      </div>
+      <div class="row">
+        <button class="btn small ghost add-step">+ крок</button>
+        <button class="btn small bad delete-param" title="Видалити">×</button>
+      </div>
+    </div>
+    <div class="param-steps"></div>
+  </div>
+</template>
+
+<template id="tmpl-step">
+  <div class="step">
+    <select class="input action">
+      <option value="set_text">= текст</option>
+      <option value="set_param">= параметр</option>
+      <option value="append_text">+ текст</option>
+      <option value="append_param">+ параметр</option>
+      <option value="lower">lower()</option>
+      <option value="replace">replace()</option>
+      <option value="to_int">to_int()</option>
+      <!-- REPLACED delete_first WITH delete_at(index) -->
+      <option value="delete_at">delete_at(index)</option>
+      <option value="plus_num">+ число</option>
+    </select>
+    <div class="kv inputs"></div>
+    <button class="btn small ghost del-step" title="Прибрати">–</button>
+  </div>
+</template>
+
+<script>
+(function(){
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+  const groupListEl = $("#group-list");
+
+  // ---------- groups ----------
+  function number_groups(){
+    $$(".group-card").forEach((g, i)=>{
+      const label = $(".group-label", g);
+      if(label) label.textContent = `group ${i+1}`;
+    });
+  }
+
+  function add_group({withInitialParam=true} = {}){
+    const g = document.importNode($("#tmpl-group").content, true).firstElementChild;
+    $(".add-empty", g).addEventListener("click", ()=> add_param(g, ""));
+    $(".dup-group", g).addEventListener("click", ()=> {
+      const data = get_group_json(g);
+      apply_group_json(data);
+      number_groups();
+      render_json();
+      $$(".group-card").slice(-1)[0]?.scrollIntoView({behavior:"smooth",block:"center"});
+    });
+    $(".del-group", g).addEventListener("click", ()=> { g.remove(); number_groups(); render_json(); });
+
+    groupListEl.appendChild(g);
+    if(withInitialParam) add_param(g, "");
+    number_groups();
+    render_json();
+    return g;
+  }
+
+  // ---------- params ----------
+  function add_param(groupEl, name=""){
+    const card = document.importNode($("#tmpl-param").content, true).firstElementChild;
+    $(".param-name", card).value = name;
+    $(".param-name", card).addEventListener("input", ()=>{ refresh_sources_in_group(groupEl); render_json(); });
+
+    $(".add-step", card).addEventListener("click", ()=> add_step(card, groupEl));
+    $(".delete-param", card).addEventListener("click", ()=>{ card.remove(); refresh_sources_in_group(groupEl); render_json(); });
+
+    $(".param-steps", card).innerHTML = "";
+    add_step(card, groupEl);
+
+    $(".param-list", groupEl).appendChild(card);
+    render_json();
+    return card;
+  }
+
+  function add_step(card, groupEl){
+    const step = document.importNode($("#tmpl-step").content, true).firstElementChild;
+    $(".del-step", step).addEventListener("click", ()=>{ step.remove(); render_json(); });
+
+    const actionSel = $(".action", step);
+    const inputsBox = $(".inputs", step);
+    actionSel.addEventListener("change", ()=> build_inputs(inputsBox, actionSel.value, card, groupEl));
+    build_inputs(inputsBox, actionSel.value, card, groupEl);
+    $(".param-steps", card).appendChild(step);
+    render_json();
+  }
+
+  function build_inputs(box, action, card, groupEl){
+    box.innerHTML = "";
+    if(action === "set_text" || action === "append_text"){
+      const inp = document.createElement("textarea");
+      inp.className = "input";
+      inp.placeholder = "текст…";
+      inp.addEventListener("input", render_json);
+      box.appendChild(inp);
+    } else if(action === "set_param" || action === "append_param"){
+      const sel = document.createElement("select");
+      sel.className = "input src-param";
+      fill_source_options(sel, card, groupEl);
+      sel.addEventListener("change", render_json);
+      box.appendChild(sel);
+    } else if(action === "replace"){
+      const a = document.createElement("input"); a.className="input"; a.placeholder="що";
+      const b = document.createElement("input"); b.className="input"; b.placeholder="на що";
+      a.addEventListener("input", render_json); b.addEventListener("input", render_json);
+      box.appendChild(a); box.appendChild(b);
+    } else if(action === "plus_num"){
+      const n = document.createElement("input"); n.className="input"; n.type="number"; n.placeholder="число";
+      n.addEventListener("input", render_json);
+      box.appendChild(n);
+    } else if(action === "delete_at"){   /* NEW: input index */
+      const i = document.createElement("input");
+      i.className = "input";
+      i.type = "number";
+      i.placeholder = "індекс (0..)";
+      i.addEventListener("input", render_json);
+      box.appendChild(i);
+    }
+    // lower, to_int – no extra inputs
+    render_json();
+  }
+
+  // options: category + previous params in this group (before current card)
+  function fill_source_options(selectEl, currentCard, groupEl){
+    const cards = $$(".param-card", groupEl);
+    const idx = cards.indexOf(currentCard);
+    const prevNames = cards
+      .slice(0, Math.max(0, idx))
+      .map(c => $(".param-name", c).value.trim())
+      .filter(Boolean);
+
+    selectEl.innerHTML = "";
+
+    const optCat = document.createElement("optgroup");
+    optCat.label = "Категорія";
+    AVAILABLE_PARAMS.forEach(n => {
+      const o = document.createElement("option");
+      o.value = n; o.textContent = n;
+      optCat.appendChild(o);
+    });
+
+    const optOwn = document.createElement("optgroup");
+    optOwn.label = "Власні (раніше у групі)";
+    prevNames.forEach(n => {
+      const o = document.createElement("option");
+      o.value = `@${n}`; o.textContent = n;
+      optOwn.appendChild(o);
+    });
+
+    selectEl.appendChild(optCat);
+    selectEl.appendChild(optOwn);
+  }
+
+  function ensure_select_value(selectEl, value){
+    if(!value) return;
+    const found = [...selectEl.options].some(o => o.value === value);
+    if(!found){
+      const og = document.createElement("optgroup");
+      og.label = "Значення з JSON";
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = value.replace(/^@/, '');
+      og.appendChild(opt);
+      selectEl.appendChild(og);
+    }
+    selectEl.value = value;
+  }
+
+  function refresh_sources_in_group(groupEl){
+    $$(".param-card", groupEl).forEach(card=>{
+      $$(".src-param", card).forEach(sel=> fill_source_options(sel, card, groupEl));
+    });
+  }
+
+  // ---------- JSON helpers ----------
+  function get_card_steps(card){
+    const steps = [];
+    $$(".step", card).forEach(step=>{
+      const op = $(".action", step).value;
+      if(op==="set_text"||op==="append_text"){
+        steps.push({op, value: $(".inputs .input", step).value||""});
+      }else if(op==="set_param"||op==="append_param"){
+        steps.push({op, value: $(".inputs select", step).value||""});
+      }else if(op==="replace"){
+        const [a,b] = $$(".inputs .input", step);
+        steps.push({op, from: a?.value||"", to: b?.value||""});
+      }else if(op==="plus_num"){
+        steps.push({op, value: $(".inputs .input", step).value||"0"});
+      }else if(op==="delete_at"){
+        const idx = parseInt($(".inputs .input", step)?.value ?? "0", 10);
+        steps.push({op, index: isNaN(idx) ? 0 : idx});
+      }else if(op==="lower"||op==="to_int"){
+        steps.push({op});
+      }else{
+        steps.push({op});
+      }
+    });
+    return steps;
+  }
+
+  function get_group_json(groupEl){
+    const params = [];
+    $$(".param-card", groupEl).forEach(card=>{
+      const name = $(".param-name", card).value.trim();
+      if(!name) return;
+      params.push({ name, steps: get_card_steps(card) });
+    });
+    return { params };
+  }
+
+  function apply_group_json(g){
+    const groupEl = add_group({withInitialParam:false});
+    const plist = $(".param-list", groupEl);
+    plist.innerHTML = "";
+
+    const params = Array.isArray(g.params) ? g.params : [];
+    params.forEach(p=>{
+      const card = add_param(groupEl, p?.name || "");
+      $(".param-steps", card).innerHTML = "";
+
+      const steps = Array.isArray(p?.steps) ? p.steps : [];
+      steps.forEach(s=>{
+        // backward-compat: convert legacy delete_first -> delete_at(0)
+        if (s?.op === "delete_first") {
+          s = { op: "delete_at", index: 0 };
+        }
+
+        add_step(card, groupEl);
+        const last = $$(".step", card).slice(-1)[0];
+        $(".action", last).value = s?.op || "set_text";
+        build_inputs($(".inputs", last), $(".action", last).value, card, groupEl);
+
+        if(s.op==="set_text"||s.op==="append_text"){
+          $(".inputs .input", last).value = s?.value ?? "";
+        }else if(s.op==="set_param"||s.op==="append_param"){
+          const sel = $(".inputs select", last);
+          fill_source_options(sel, card, groupEl);
+          ensure_select_value(sel, s?.value ?? "");
+        }else if(s.op==="replace"){
+          const [a,b] = $$(".inputs .input", last);
+          if(a) a.value = s?.from ?? "";
+          if(b) b.value = s?.to ?? "";
+        }else if(s.op==="plus_num"){
+          $(".inputs .input", last).value = s?.value ?? "0";
+        }else if(s.op==="delete_at"){
+          $(".inputs .input", last).value = (typeof s?.index === "number" ? s.index : 0);
+        }
+      });
+    });
+
+    number_groups();
+    render_json();
+    return groupEl;
+  }
+
+  function collect_json(){
+    const groups = [];
+    $$(".group-card").forEach((g, i)=>{
+      const params = [];
+      $$(".param-card", g).forEach(card=>{
+        const name = $(".param-name", card).value.trim();
+        if(!name) return;
+        params.push({ name, steps: get_card_steps(card) });
+      });
+      groups.push({ group_name: `group ${i+1}`, params });
+    });
+    return groups;
+  }
+
+  function render_json(){
+    $("#steps_json").value = JSON.stringify(collect_json(), null, 2);
+  }
+
+  function load_from_json(groups){
+    if(!Array.isArray(groups)){ console.warn("PRELOAD_DATA must be an array"); return; }
+    groupListEl.innerHTML = "";
+    groups.forEach((g)=>{
+      apply_group_json(g);
+    });
+    number_groups();
+    render_json();
+  }
+
+  window.loadFromJson = load_from_json;
+
+  // init
+  $("#add-group").addEventListener("click", ()=> add_group());
+
+  if (Array.isArray(PRELOAD_DATA) && PRELOAD_DATA.length){
+    load_from_json(PRELOAD_DATA);
+  } else {
+    add_group();
+  }
+})();
+</script>
+</body>
+</html>

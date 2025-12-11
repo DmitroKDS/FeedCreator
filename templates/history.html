@@ -1,0 +1,63 @@
+<!-- templates/history.html -->
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>history</title>
+  <style>
+    :root{--bg:#f7f9fc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;--pill:#eef2ff}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding:24px}
+    h1{margin:0 0 16px;font-size:20px}
+    table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    th,td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:14px;text-align:left;vertical-align:top}
+    thead th{background:#fafafa;color:var(--muted);font-weight:600}
+    tbody tr:hover{background:#f9fafb}
+    .actions a{margin-right:8px;text-decoration:none}
+    .pill{display:inline-block;padding:2px 8px;border:1px solid var(--border);border-radius:999px;font-size:12px;background:var(--pill)}
+    @media (max-width: 760px){
+      th:nth-child(2),td:nth-child(2){display:none} /* hide marketplace on small screens (always rozetka) */
+    }
+  </style>
+</head>
+<body>
+  <h1>history</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>file</th>
+        <th>category</th>
+        <th>company</th>
+        <th>created</th>
+        <th>actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in show_history %}
+      {% set history_id = row[0] %}
+      {% set file_name = row[1] %}
+      {% set category = row[2] %}
+      {% set company = row[3] %}
+      {% set created = row[4] %}
+      <tr>
+        <td>{{ history_id }}</td>
+        <td>{{ file_name }}</td>
+        <td>{{ category }}</td>
+        <td>{{ company if company else "—" }}</td>
+        <td>{{ created }}</td>
+        <td class="actions">
+          <a href="/history/{{ history_id }}">view</a>
+          <a href="/use_history/{{ history_id }}">use</a>
+          <a href="/delete_history/{{ history_id }}" onclick="return confirm('delete?')">delete</a>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7">no history yet</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
